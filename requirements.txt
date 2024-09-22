@@ -1,0 +1,3 @@
+PyKCS11
+cryptography
+colorama
