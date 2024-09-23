@@ -130,7 +130,7 @@ def main():
     print(f"{Fore.YELLOW}🔍 Dati da firmare: {data}")
 
     # Firma il messaggio usando la chiave privata
-    mechanism = PyKCS11.Mechanism(PyKCS11.CKM_SHA256_RSA_PKCS, None)
+    mechanism = PyKCS11.Mechanism(PyKCS11.CKM_SHA512_RSA_PKCS, None)
     signature = session.sign(private_key, data, mechanism)
     signature = bytes(signature)
     print(f"{Fore.GREEN}✅ Firma generata (in esadecimale): {binascii.hexlify(signature)}")
@@ -161,7 +161,7 @@ def main():
             signature,
             data,
             padding.PKCS1v15(),
-            hashes.SHA256()
+            hashes.SHA512()
         )
         print(f"{Fore.GREEN}✅ Firma verificata correttamente!")
     except Exception as e:
