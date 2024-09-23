@@ -91,7 +91,9 @@ def main():
     # Trova la chiave privata sulla Smart Card
     private_key = session.findObjects([(PyKCS11.CKA_CLASS, PyKCS11.CKO_PRIVATE_KEY)])[0]
     if args.debug:
+        private_key_info = session.getAttributeValue(private_key, [PyKCS11.CKA_KEY_TYPE, PyKCS11.CKA_MODULUS_BITS])
         print(f"{Fore.YELLOW}🔍 Chiave privata trovata: {private_key}")
+        print(f"{Fore.YELLOW}🔍 Lunghezza chiave privata: {private_key_info[1]} bit")
 
     # Trova il certificato pubblico sulla Smart Card
     public_cert = session.findObjects([(PyKCS11.CKA_CLASS, PyKCS11.CKO_CERTIFICATE)])[0]
@@ -120,6 +122,8 @@ def main():
     public_key = cert.public_key()
     if args.debug:
         print(f"{Fore.YELLOW}🔍 Chiave pubblica caricata correttamente (DER)")
+        print(f"{Fore.YELLOW}🔍 Lunghezza chiave pubblica: {public_key.key_size} bit")
+        print(f"{Fore.YELLOW}🔍 Tipo chiave pubblica: {public_key.__class__.__name__}")
 
     # Codifica il messaggio da firmare
     data = args.message.encode()
